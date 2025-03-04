@@ -1,0 +1,14 @@
+Form{
+    width: 30px;
+    margin: auto;
+}
+
+.login{
+    background-color: blue;
+    color: white;
+    border-radius: 10px;
+}
+
+.reg{
+    width: 65px;
+}

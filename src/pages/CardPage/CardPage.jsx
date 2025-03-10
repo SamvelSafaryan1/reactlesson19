@@ -1,7 +1,9 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import Item from '../../Components/Item/Item'
+import { Context } from '../../Context/Context'
 
-function CardPage({cards, changePriceAndCount, del, clear}){
+function CardPage(){
+  const {cards, changePriceAndCount, del, clear} = useContext(Context)
   return (
     <div>
       <div className='cards-item'>

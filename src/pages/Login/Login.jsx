@@ -1,10 +1,12 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import {Formik, Form, Field} from 'formik'
 import { useNavigate } from 'react-router-dom'
 import Register from '../Register/Register'
 import './Login.css'
+import { Context } from '../../Context/Context'
 
-function Login({users}){
+function Login(){
+    const {users} = useContext(Context)
     let navigate = useNavigate()
     let authUser = (value, users) => {
         let user = users.find((user) => user.email === value.email)

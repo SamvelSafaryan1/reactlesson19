@@ -3,12 +3,8 @@ import axios from 'axios'
 import './App.css'
 import Layout from './Components/Layout/Layout'
 import { useEffect, useState } from 'react'
-import HomePage from './pages/HomePage/HomePage'
-import CardPage from './pages/CardPage/CardPage'
-import ProductPage from './pages/ProductPage/ProductPage'
-import Login from './pages/Login/Login'
-import Profile from './pages/Profile/Profile'
-import Register from './pages/Register/Register'
+import {HomePage,CardPage,ProductPage,Login,Profile,Register} from './pages'
+import { Context } from './Context/Context'
 
 export const instance = axios.create({
   baseURL : 'https://fakestoreapi.com'
@@ -26,6 +22,8 @@ function App() {
   let [cards, setCards] = useState([])
 
   useEffect(() => {
+    let local = JSON.parse(localStorage.getItem('cars'))
+    setCards(local)
     instance.get('/products')
       .then((res) =>  setProducts(res.data.map((prod) => {
         return {
@@ -34,6 +32,7 @@ function App() {
           cardPrice: prod.price
         }
       })))
+      
   }, [])
 
   const changePriceAndCount = (count, id) => {
@@ -86,16 +85,26 @@ function App() {
 
   return (
     <div className="app">
+      <Context.Provider value={{
+        cards,
+        products,
+        addToCard,
+        users,
+        changePriceAndCount,
+        del,
+        claer
+      }}>
       <Routes>
-        <Route path='/' element={<Layout cards={cards}/>}>
-          <Route index element={<HomePage products={products} addToCard={addToCard} />} />
-          <Route path='/login' element={<Login users={users}/> }/>
-          <Route path='/card' element={<CardPage cards={cards} changePriceAndCount={changePriceAndCount} del={del} clear={claer}/>} />
+        <Route path='/' element={<Layout />}>
+          <Route index element={<HomePage />}/>
+          <Route path='/login' element={<Login />}/>
+          <Route path='/card' element={<CardPage />}/>
           <Route path='/:id' element={<ProductPage /> }/>
           <Route path='/register' element={<Register />}/>
           <Route path='/profile' element={<Profile /> }/>
         </Route>
       </Routes>
+      </Context.Provider>
     </div>
   )
 }

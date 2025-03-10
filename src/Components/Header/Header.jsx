@@ -1,9 +1,13 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { FaShoppingCart } from "react-icons/fa";
 import './Header.css'
 import { NavLink, useLocation } from 'react-router-dom';
+import { Context } from '../../Context/Context';
 
-function Header({cards}){
+function Header(){
+  let {cards} = useContext(Context)
+  console.log(cards);
+  
   let {pathname} = useLocation()
 
   return(
